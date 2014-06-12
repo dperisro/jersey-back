@@ -1,0 +1,126 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.mdp</groupId>
+	<artifactId>jersey-back</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+	<name>jersey-back</name>
+	<description>jersey-back</description>
+	<modules>
+		<module>jersey-back-core</module>
+		<module>jersey-back-ws</module>
+	</modules>
+
+	<repositories>
+		<repository>
+			<id>public</id>
+			<url>http://192.168.0.41:8081/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Repositorio Snapshots</name>
+			<url>http://192.168.0.41:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+
+		<repository>
+			<id>nexus</id>
+			<name>Repositorio Releases</name>
+			<url>http://192.168.0.41:8081/nexus/content/repositories/releases</url>
+		</repository>
+
+	</distributionManagement>
+
+	<properties>
+		<!-- COMMON PROPERTIES -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.7</java.version>
+		<log4j.version>1.2.17</log4j.version>
+		<slf4j.version>1.5.10</slf4j.version>
+
+		<!-- CORE PROPERTIES -->
+		<mysql.version>5.1.31</mysql.version>
+		<spring.version>3.2.2.RELEASE</spring.version>
+		<commons.dbcp.version>20030825.184428</commons.dbcp.version>
+		<commons.pool.version>20030825.183949</commons.pool.version>
+		<hibernate.entity.version>4.1.5.Final</hibernate.entity.version>
+		<hibernate.jpa.version>1.0.1.Final</hibernate.jpa.version>
+		<hibernate.ejb.version>3.0</hibernate.ejb.version>
+
+		<!-- TEST -->
+		<junit.version>4.11</junit.version>
+		<jersey.version>2.7</jersey.version>
+
+	</properties>
+
+	<dependencies>
+
+		<!-- LOGGING -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- TEST DEPENDENCIES -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>

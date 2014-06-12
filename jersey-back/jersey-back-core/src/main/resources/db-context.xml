@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx-3.2.xsd"
+	default-autowire="byName">
+
+	<!-- Scans within the base package of the application for @Components to configure as beans -->
+	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:db.properties" />
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${db.connection.driver_class}" />
+		<property name="url" value="${db.connection.url}" />
+		<property name="username" value="${db.connection.username}" />
+		<property name="password" value="${db.connection.password}" />
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.mdp.jersey.back.books" />
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.connection.characterEncoding">${db.common.characterEncoding}</prop>
+				<prop key="hibernate.bytecode.use_reflection_optimizer">${db.common.bytecode.use_reflection_optimizer}</prop>
+				<prop key="hibernate.show_sql">${db.common.show_sql}</prop>
+				<prop key="hibernate.format_sql">${db.common.format_sql}</prop>
+				<prop key="hibernate.transaction.factory_class">${db.common.transaction.factory_class}</prop>
+				<prop key="hibernate.cache.provider_class">${db.common.cache.provider_class}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${db.common.hbm2ddl.auto}</prop>
+				<prop key="hibernate.dialect">${db.common.dialect}</prop>
+				<prop key="hibernate.c3po.min_size">${db.common.c3p0.min_size}</prop>
+				<prop key="hibernate.autoReconnect">${db.common.autoReconnect}</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+			</props>
+		</property>
+
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+</beans>
